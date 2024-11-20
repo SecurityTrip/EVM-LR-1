@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema evm
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema evm
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `evm` DEFAULT CHARACTER SET utf8 ;
+USE `evm` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`shop`
+-- Table `evm`.`shop`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`shop` (
+CREATE TABLE IF NOT EXISTS `evm`.`shop` (
   `id_shop` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NULL,
   `payment_for_delivery` VARCHAR(45) NULL,
@@ -29,9 +29,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`product`
+-- Table `evm`.`product`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`product` (
+CREATE TABLE IF NOT EXISTS `evm`.`product` (
   `id_product` INT NOT NULL,
   `name` VARCHAR(45) NULL,
   `firm` VARCHAR(45) NULL,
@@ -45,9 +45,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`order`
+-- Table `evm`.`order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`order` (
+CREATE TABLE IF NOT EXISTS `evm`.`order` (
   `id_order` INT NOT NULL,
   `shop_id_shop` INT NOT NULL,
   `product_id_product` INT NOT NULL,
@@ -62,21 +62,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`order` (
   INDEX `fk_order_product1_idx` (`product_id_product` ASC) VISIBLE,
   CONSTRAINT `fk_order_shop1`
     FOREIGN KEY (`shop_id_shop`)
-    REFERENCES `mydb`.`shop` (`id_shop`)
+    REFERENCES `evm`.`shop` (`id_shop`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_product1`
     FOREIGN KEY (`product_id_product`)
-    REFERENCES `mydb`.`product` (`id_product`)
+    REFERENCES `evm`.`product` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`delivery`
+-- Table `evm`.`delivery`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`delivery` (
+CREATE TABLE IF NOT EXISTS `evm`.`delivery` (
   `id_delivery` INT NOT NULL,
   `order_id_order` INT NOT NULL,
   `date` VARCHAR(45) NULL,
@@ -87,16 +87,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`delivery` (
   INDEX `fk_delivery_order1_idx` (`order_id_order` ASC) VISIBLE,
   CONSTRAINT `fk_delivery_order1`
     FOREIGN KEY (`order_id_order`)
-    REFERENCES `mydb`.`order` (`id_order`)
+    REFERENCES `evm`.`order` (`id_order`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`product_has_shop`
+-- Table `evm`.`product_has_shop`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`product_has_shop` (
+CREATE TABLE IF NOT EXISTS `evm`.`product_has_shop` (
   `product_id_product` INT NOT NULL,
   `shop_id_shop` INT NOT NULL,
   PRIMARY KEY (`product_id_product`, `shop_id_shop`),
@@ -104,12 +104,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`product_has_shop` (
   INDEX `fk_product_has_shop_product_idx` (`product_id_product` ASC) VISIBLE,
   CONSTRAINT `fk_product_has_shop_product`
     FOREIGN KEY (`product_id_product`)
-    REFERENCES `mydb`.`product` (`id_product`)
+    REFERENCES `evm`.`product` (`id_product`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_product_has_shop_shop1`
     FOREIGN KEY (`shop_id_shop`)
-    REFERENCES `mydb`.`shop` (`id_shop`)
+    REFERENCES `evm`.`shop` (`id_shop`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -120,7 +120,7 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 
-INSERT INTO `mydb`.`shop` (`email`, `payment_for_delivery`) VALUES
+INSERT INTO `evm`.`shop` (`email`, `payment_for_delivery`) VALUES
 ('shop1@example.com', 'Yes'),
 ('shop2@example.com', 'Yes'),
 ('shop3@example.com', 'No'),
@@ -140,7 +140,7 @@ INSERT INTO `mydb`.`shop` (`email`, `payment_for_delivery`) VALUES
 
 
 
-INSERT INTO `mydb`.`product` (`id_product`, `name`, `firm`, `model`, `tech_spec`, `price`, `warranty_period`, `image`) VALUES
+INSERT INTO `evm`.`product` (`id_product`, `name`, `firm`, `model`, `tech_spec`, `price`, `warranty_period`, `image`) VALUES
 (1, 'Laptop', 'Apple', 'MacBook Pro', '16GB RAM, 512GB SSD', '2000.00', '2 years', 'macbook_pro.jpg'),
 (2, 'Phone', 'Samsung', 'Galaxy S21', '8GB RAM, 256GB', '800.00', '1 year', 'galaxy_s21.jpg'),
 (3, 'TV', 'LG', 'OLED65C1', '4K UHD, OLED', '1500.00', '2 years', 'oled65c1.jpg'),
@@ -158,7 +158,7 @@ INSERT INTO `mydb`.`product` (`id_product`, `name`, `firm`, `model`, `tech_spec`
 (15, 'VR Headset', 'Oculus', 'Quest 2', '256GB', '400.00', '2 years', 'oculus_quest2.jpg');
 
 
-INSERT INTO `mydb`.`order` (`id_order`, `order_date`, `shop_id_shop`, `product_id_product`, `order_time`, `quantity`, `client_name`, `client_phone`, `confirmation`) VALUES
+INSERT INTO `evm`.`order` (`id_order`, `order_date`, `shop_id_shop`, `product_id_product`, `order_time`, `quantity`, `client_name`, `client_phone`, `confirmation`) VALUES
 (1, '2024-09-01', 1, 1, '10:00:00', '2', 'John Doe', '+1234567890', 'Confirmed'),
 (2, '2024-09-02', 2, 2, '11:30:00', '1', 'Jane Smith', '+0987654321', 'Confirmed'),
 (3, '2024-09-03', 3, 3, '09:45:00', '5', 'Bill Gates', '+9876543210', 'Confirmed'),
@@ -176,7 +176,7 @@ INSERT INTO `mydb`.`order` (`id_order`, `order_date`, `shop_id_shop`, `product_i
 (15, '2024-09-15', 15, 15, '18:30:00', '1', 'Kevin McCallister', '+7654321098', 'Confirmed');
 
 
-INSERT INTO `mydb`.`delivery` (`id_delivery`, `date`, `address`, `client_name`, `courier_name`, `order_id_order`) VALUES
+INSERT INTO `evm`.`delivery` (`id_delivery`, `date`, `address`, `client_name`, `courier_name`, `order_id_order`) VALUES
 (1, '2024-09-02', '123 Main St', 'John Doe', 'Courier 1', 1),
 (2, '2024-09-03', '456 Elm St', 'Jane Smith', 'Courier 2', 2),
 (3, '2024-09-04', '789 Oak St', 'Bill Gates', 'Courier 3', 3),
@@ -192,5 +192,3 @@ INSERT INTO `mydb`.`delivery` (`id_delivery`, `date`, `address`, `client_name`, 
 (13, '2024-09-14', '777 Fir St', 'Igor Frankenstein', 'Courier 13', 13),
 (14, '2024-09-15', '888 Willow St', 'Jack Sparrow', 'Courier 14', 14),
 (15, '2024-09-16', '999 Oak St', 'Kevin McCallister', 'Courier 15', 15);
-
-
